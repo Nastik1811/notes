@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import Note from "./components/Note"
+import TagChip from "./components/TagChip"
+import logo  from "./assets/images/logo.png"
+import data from "./data.json"
+import NoteEditor from "./components/NoteEditor"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app-container">
+      <header className="app-header">
+      <div className="app-logo">
+        <img src={logo}/>
+      </div>
+      <button className="btn new-note-btn">+ New note</button>
       </header>
+      
+      <section className="notes-section">
+        <div className="taglist-container">
+        <ul className="taglist">
+          {data["tags"].map(tag => 
+            <li>
+              <TagChip name={tag}/>
+            </li>
+          )}
+
+        </ul>
+        
+      </div>
+        <div className="notes-list">
+          {data["notes"].map(note => <Note title={note["title"]} body={note["body"]}/>)}
+        </div>
+      </section>
+      <NoteEditor/>
+
     </div>
   );
 }

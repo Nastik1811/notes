@@ -1,0 +1,273 @@
+
+@font-face{
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: 
+    local("Roboto"),
+    url("./assets/fonts/Roboto-Regular.ttf") format('truetype');
+} 
+
+@font-face{
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: 
+    local("Roboto-Light"),
+    url("./assets/fonts/Roboto-Light.ttf") format('truetype');
+} 
+
+@font-face{
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: 
+    local("Roboto-Medium"),
+    url("./assets/fonts/Roboto-Medium.ttf") format('truetype');
+}
+@font-face{
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  src: 
+    local("Comfortaa"),
+    url("./assets/fonts/Comfortaa-Regular.ttf") format('truetype');
+} 
+@font-face{
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 500;
+  src: 
+    local("Comfortaa"),
+    url("./assets/fonts/Comfortaa-Medium.ttf") format('truetype');
+} 
+
+@font-face{
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 300;
+  src: 
+    local("Comfortaa"),
+    url("./assets/fonts/Comfortaa-Light.ttf") format('truetype');
+} 
+
+$font-basic: 'Roboto', 'Open Sans', sans-serif;
+$font-extra: 'Comfortaa', 'Open Sans', sans-serif;
+$color-primary-dark: #888ABC;
+$note-color: #FFFDF5;
+$border-radius: 30px;
+$box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+$basic-transition: 0.1s ease;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html{
+  height: 100%;
+}
+
+#root{
+  min-height: 100%;
+  display: flex;
+  background-color: #EFF0FA;
+}
+.app-container{
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.app-header{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 24px;
+  margin-bottom: 0;
+}
+.app-logo{
+  font-family: $font-extra;
+  font-size: 100px;
+  font-weight: 300;
+  text-align: center;
+  color: #DCDDF0;
+  margin: auto;
+}
+
+.new-note-btn{
+  align-self: center;
+  margin: auto;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 24px;
+  //border: 1px solid rgb(97, 99, 163);
+  padding: 6px 12px;
+  background-color: $color-primary-dark;
+  box-shadow: $box-shadow;
+  height: fit-content;
+  width: 200px;
+  color: white;
+  font-size: 24px;
+  font-family: $font-extra;
+}
+
+
+.section-title{
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 300;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgb(217, 223, 240);
+}
+
+.notes-list{
+  display: grid;
+  margin: auto;
+  grid-template-columns: repeat(auto-fit, 240px);
+  gap: 12px;
+}
+.note-container{
+  width: 240px;
+  height: 270px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background-color:  $note-color;
+  display: grid;
+  grid-template-rows: 32px 1fr 24px;
+  box-shadow: $box-shadow;
+}
+
+.note-title{
+  font-family: $font-basic;
+  font-size: 18px;
+  font-weight: 500;
+  margin: auto 0;
+}
+
+.note-body{
+  font-family: $font-basic;
+  font-weight: 300;
+  text-overflow: ellipsis;
+}
+.taglist-container{
+  margin: 8px 16px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+.taglist{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80%;
+  margin-bottom: 12px;
+}
+.taglist li{
+  margin: 3px 6px;
+  list-style: none;
+}
+
+.tag-chip{
+  display: flex;
+  font-family: $font-extra;
+  font-size: 18px;
+  justify-content: center;
+  padding: 8px 16px;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #C4C5E3;
+  box-shadow: $box-shadow;
+  //border: 1px solid rgb(150, 162, 196);
+}
+
+.chip-text{
+  font-size: 16px;
+}
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.315);
+  z-index: 10;
+}
+
+.modal{
+  display: flex;
+  position: relative;
+  margin: auto;
+  margin-top: 20vh;
+  width: 580px;
+  height: fit-content;
+  min-height: 280px;
+  border-radius: 10px;
+  background-color: $note-color;
+  box-shadow: -2px 5px 20px rgba(0,0,0,0.3);
+  padding: 12px 12px 50px;
+}
+
+.edit-form{
+  display: grid;
+  grid-template-rows: 50px auto 20px ;
+  font-family: $font-basic;
+  width: 100%;
+}
+
+.note-title-input{
+  display: inline;
+  font-family: $font-extra;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border: none;
+  padding: 12px;
+  &:focus{
+    outline: none;
+  }
+}
+
+.note-body-area{
+  resize: none;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  font-size:  1rem;
+  font-family: $font-basic;
+  white-space: pre-wrap;
+  //overflow-wrap: break-word;
+  border: 2px solid transparent;
+  &:focus{
+    outline: none;
+  }
+}
+.modal-actions{
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+}
+.modal-action-btn{
+  align-self: end;
+  justify-self: end;
+  margin-right: 12px;
+  width: fit-content;
+  padding: 4px;
+  font-weight: 400;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  height: fit-content;
+  color: black;
+  font-size: 1rem;
+  font-family: $font-extra;
+  &:focus, &:hover{
+    color: $color-primary-dark;
+    outline: none;
+  }
+  &:hover{
+    transform: scale(1.1);
+  }
+  transition: $basic-transition;
+}
