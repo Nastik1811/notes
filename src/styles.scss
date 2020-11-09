@@ -54,9 +54,9 @@
 $font-basic: 'Roboto', 'Open Sans', sans-serif;
 $font-extra: 'Comfortaa', 'Open Sans', sans-serif;
 $color-primary-dark: #888ABC;
-$note-color: #FFFDF5;
+$note-color: #fdfaed;
 $border-radius: 30px;
-$box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+$box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
 $basic-transition: 0.1s ease;
 
 *{
@@ -67,6 +67,9 @@ $basic-transition: 0.1s ease;
 
 body, html{
   height: 100%;
+}
+button{
+  cursor: pointer;
 }
 
 #root{
@@ -103,6 +106,7 @@ body, html{
   text-align: center;
   border-radius: 24px;
   //border: 1px solid rgb(97, 99, 163);
+  border: none;
   padding: 6px 12px;
   background-color: $color-primary-dark;
   box-shadow: $box-shadow;
@@ -111,8 +115,14 @@ body, html{
   color: white;
   font-size: 24px;
   font-family: $font-extra;
-}
 
+  &:focus, &:hover{
+    outline: none;
+    transform: scale(1.1);
+    background-color: darken( $color-primary-dark, 20% ) ;
+  }
+  transition: $basic-transition;
+}
 
 .section-title{
   font-size: 24px;
@@ -129,6 +139,7 @@ body, html{
   gap: 12px;
 }
 .note-container{
+  cursor: pointer;
   width: 240px;
   height: 270px;
   padding: 12px 24px;
@@ -137,6 +148,11 @@ body, html{
   display: grid;
   grid-template-rows: 32px 1fr 24px;
   box-shadow: $box-shadow;
+  &:hover{
+    background-color: lighten( $note-color, 2%);
+    box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
+  }
+  transition: $basic-transition;
 }
 
 .note-title{
@@ -157,35 +173,65 @@ body, html{
   display: flex;
   justify-content: space-between;
 }
+.tag-chip{
+  cursor: pointer;
+  display: flex;
+  font-family: $font-extra;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  font-size: 16px;
+  &:hover{
+    box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
+  }
+  transition: $basic-transition;
+}
+
 .taglist{
   display: flex;
   flex-wrap: wrap;
   max-width: 80%;
   margin-bottom: 12px;
+  li{
+    margin: 3px 6px;
+    list-style: none;
+  }
+  .tag-chip{
+    background-color: #C4C5E3;
+    box-shadow: $box-shadow;
+    padding: 8px 16px;
+    //border: 1px solid rgb(150, 162, 196);
+    &:hover{
+      background-color: darken( #C4C5E3, 10%);
+    }
+  }
 }
-.taglist li{
-  margin: 3px 6px;
-  list-style: none;
+.chip-btn{
+  border: none;
+  &:focus{
+    outline: none;
+    background-color: darken( #C4C5E3, 10%);
+  }
 }
 
-.tag-chip{
+.note-taglist{
   display: flex;
-  font-family: $font-extra;
-  font-size: 18px;
-  justify-content: center;
-  padding: 8px 16px;
-  align-items: center;
-  border-radius: 30px;
-  background-color: #C4C5E3;
-  box-shadow: $box-shadow;
-  //border: 1px solid rgb(150, 162, 196);
-}
-
-.chip-text{
-  font-size: 16px;
+  flex-wrap: wrap;
+  padding: 0 12px;
+  li{
+    margin: 3px ;
+    list-style: none;
+  }
+  .tag-chip{
+    font-size: 12px;
+    background-color: #f8e9b8;
+    padding: 4px 8px;
+    //border: 1px solid rgb(150, 162, 196);
+  }
 }
 
 .overlay{
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
@@ -194,6 +240,10 @@ body, html{
   backdrop-filter: blur(3px);
   background-color: rgba(0, 0, 0, 0.315);
   z-index: 10;
+}
+
+.hidden{
+  display: none;
 }
 
 .modal{
@@ -207,12 +257,12 @@ body, html{
   border-radius: 10px;
   background-color: $note-color;
   box-shadow: -2px 5px 20px rgba(0,0,0,0.3);
-  padding: 12px 12px 50px;
+  padding: 12px 12px 40px;
 }
 
 .edit-form{
   display: grid;
-  grid-template-rows: 50px auto 20px ;
+  grid-template-rows: 50px minmax(120px, auto) max-content ;
   font-family: $font-basic;
   width: 100%;
 }
@@ -223,9 +273,11 @@ body, html{
   font-size: 1.6rem;
   background-color: transparent;
   border: none;
+  border-bottom: 1px solid transparent;
   padding: 12px;
   &:focus{
     outline: none;
+    border-color: #948e7b;;
   }
 }
 
@@ -237,8 +289,7 @@ body, html{
   font-size:  1rem;
   font-family: $font-basic;
   white-space: pre-wrap;
-  //overflow-wrap: break-word;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   &:focus{
     outline: none;
   }
@@ -265,8 +316,6 @@ body, html{
   &:focus, &:hover{
     color: $color-primary-dark;
     outline: none;
-  }
-  &:hover{
     transform: scale(1.1);
   }
   transition: $basic-transition;

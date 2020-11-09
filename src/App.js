@@ -3,34 +3,96 @@ import TagChip from "./components/TagChip"
 import logo  from "./assets/images/logo.png"
 import data from "./data.json"
 import NoteEditor from "./components/NoteEditor"
+import { useEffect, useState } from "react"
+import uuid from 'uuid-random'
 
-function App() {
+
+const editorDefaults = {
+  open: false,
+  note: undefined,
+  onSave: null,
+  onCancel: null,
+}
+
+const App = () => {
+  const [notes, setNotes] = useState(data["notes"])
+  const [tags, setTags] = useState(data["tags"])
+  const [editingNote, setEditingNote] = useState(null)
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
+
+
+  const addNote = () => {
+    let note = {id: "3", title: "New Note", body: "This is my note. He he he."}
+    setNotes(notes => [note, ...notes])
+  }
+
+  const onEdit = (id) => {
+    let noteIndex = notes.findIndex(note => note.id === id)
+    setEditingNote(notes[noteIndex])
+    setIsEditorOpen(true)
+  }
+
+  const onDelete = (id) => {
+    let newSet = notes.filter(note => note.id !== id)
+    setNotes(newSet)
+  }
+
+  const onCancel = () => {
+    setIsEditorOpen(false)
+    setEditingNote(null)
+  }
+
+  const onSave = () => {
+    let index = notes.findIndex(note => note.id === editingNote.id)
+    let newSet = [...notes]
+    
+    if(index !== -1){
+      newSet[index] = editingNote
+    }else{
+      newSet.push(editingNote)
+    }
+    setNotes(newSet)
+    setIsEditorOpen(false)
+  }
+
+  const createNote = () => {
+    let id = uuid()
+    setEditingNote({
+      id, 
+      title: "",
+      body: "",
+      tags: []
+    })
+    setIsEditorOpen(true)
+  }
+
   return (
     <div className="app-container">
       <header className="app-header">
-      <div className="app-logo">
-        <img src={logo}/>
-      </div>
-      <button className="btn new-note-btn">+ New note</button>
+        <div className="app-logo">
+          <img src={logo}/>
+        </div>
+        <button className="btn new-note-btn" onClick={createNote}>+ New note</button>
       </header>
-      
       <section className="notes-section">
         <div className="taglist-container">
-        <ul className="taglist">
-          {data["tags"].map(tag => 
+          <ul className="taglist">
             <li>
-              <TagChip name={tag}/>
+              <input className="chip-btn tag-chip" type="button" value="Show all"/>
             </li>
-          )}
-
-        </ul>
-        
+            {tags?.map(tag => 
+              <li>
+                <TagChip name={tag}/>
+              </li>
+            )}
+          </ul>
       </div>
-        <div className="notes-list">
-          {data["notes"].map(note => <Note title={note["title"]} body={note["body"]}/>)}
-        </div>
+      <div className="notes-list">
+        {notes?.map(note => <Note title={note["title"]} body={note["body"]} onClick={() => onEdit(note.id)}/>)}
+      </div>
       </section>
-      <NoteEditor/>
+
+      <NoteEditor open={isEditorOpen} note={editingNote} onCancel={onCancel} onSave={onSave} onEdit={setEditingNote}/>
 
     </div>
   );
