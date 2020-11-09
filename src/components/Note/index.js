@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Note = ({title, body, tags, onClick}) => {
+const Note = ({title, body, tags, onEdit}) => {
     return(
-        <div className="note-container" onClick={onClick}>
+        <div className="note-container" onClick={onEdit}>
               <h4 className="note-title">{title || "Title"}</h4>
               <p className="note-body">
                   {body}

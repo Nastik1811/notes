@@ -20,6 +20,10 @@ const App = () => {
   const [editingNote, setEditingNote] = useState(null)
   const [isEditorOpen, setIsEditorOpen] = useState(false)
 
+  useEffect(() => {
+
+  }, [notes])
+
 
   const addNote = () => {
     let note = {id: "3", title: "New Note", body: "This is my note. He he he."}
@@ -42,10 +46,16 @@ const App = () => {
     setEditingNote(null)
   }
 
+  const tagsLookUp = text => {
+    let tags = text.match(/#[a-zA-Zа-яА-Я0-9]+/g)
+    return tags
+  }
+
   const onSave = () => {
     let index = notes.findIndex(note => note.id === editingNote.id)
     let newSet = [...notes]
-    
+    let tags = tagsLookUp(editingNote.body)
+    console.log(tags)
     if(index !== -1){
       newSet[index] = editingNote
     }else{
@@ -88,11 +98,23 @@ const App = () => {
           </ul>
       </div>
       <div className="notes-list">
-        {notes?.map(note => <Note title={note["title"]} body={note["body"]} onClick={() => onEdit(note.id)}/>)}
+        {notes?.map(
+          note => <Note 
+                    key={note.id} 
+                    title={note["title"]} 
+                    body={note["body"]} 
+                    onEdit={() => onEdit(note.id)}
+                    />)}
       </div>
       </section>
 
-      <NoteEditor open={isEditorOpen} note={editingNote} onCancel={onCancel} onSave={onSave} onEdit={setEditingNote}/>
+      <NoteEditor 
+        open={isEditorOpen} 
+        note={editingNote} 
+        onCancel={onCancel} 
+        onSave={onSave} 
+        onEdit={setEditingNote}
+        />
 
     </div>
   );

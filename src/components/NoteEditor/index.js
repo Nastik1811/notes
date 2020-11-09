@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import TagChip from '../TagChip'
-
+import { HighlightWithinTextarea } from 'react-highlight-within-textarea'
 
 
 const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
 
     if(!open){
         return null
+    }
+
+    const lookForTags = text => {
+        
+    }
+    const onEditBody = (e) => {
+
+
     }
 
     return(
@@ -21,12 +29,23 @@ const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
                         onChange={e => onEdit(note => ({...note, title: e.target.value}))}
                         />
             
-                    <textarea 
-                        className="note-body-area" 
+
+                    <HighlightWithinTextarea
+                        className="body-textarea" 
+                        containerClassName="body-container" 
+                        
                         placeholder="Start typing here..." 
                         value={note?.body} 
-                        onChange={e => onEdit(note => ({...note, body: e.target.value}))}
+                        onChange={e => {
+                            onEdit(note => ({...note, body: e.target.value}))
+                            let event = e
+                            console.log(e.nativeEvent.data)
+                                }
+                            }
+                        highlight={/word/g}
                     />
+
+                    
 
                     <ul className="note-taglist">
                             {note?.tags?.map(t => <li><TagChip name={t}/></li>)}

@@ -265,35 +265,48 @@ button{
   grid-template-rows: 50px minmax(120px, auto) max-content ;
   font-family: $font-basic;
   width: 100%;
+  padding: 12px;
 }
 
 .note-title-input{
   display: inline;
   font-family: $font-extra;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   background-color: transparent;
-  border: none;
+  border: none;padding: 0px;
   border-bottom: 1px solid transparent;
-  padding: 12px;
+  margin-bottom: 8px;
   &:focus{
     outline: none;
     border-color: #948e7b;;
   }
 }
 
-.note-body-area{
+.body-container{
   resize: none;
-  width: 100%;
-  padding: 12px;
   background: transparent;
   font-size:  1rem;
   font-family: $font-basic;
   white-space: pre-wrap;
-  border: 1px solid transparent;
+  border: none !important;
   &:focus{
     outline: none;
   }
 }
+
+.body-textarea{
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  font-size:  1rem;
+  font-family: $font-basic;
+  white-space: pre-wrap;
+  border: none !important;
+  &:focus{
+    outline: none;
+  }
+}
+
 .modal-actions{
   position: absolute;
   right: 12px;
