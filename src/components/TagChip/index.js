@@ -1,10 +1,11 @@
 import React from 'react'
 
-const TagChip = ({name, onClick}) => {
+const TagChip = ({name, onClick, onDelete, selected}) => {
     return(
 
-        <li className="tag-chip" onClick={onClick}>
-            <span className="chip-text">{name}</span>
+        <li className={selected ?"tag-chip selected" : "tag-chip" }>
+            <span className="chip-text" onClick={onClick}>{name}</span>
+            <button className="delete-btn" onClick={onDelete}></button>
         </li>
     )
 }

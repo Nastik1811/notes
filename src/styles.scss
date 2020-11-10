@@ -1,4 +1,4 @@
-
+@import './styles/_variables.scss' ;
 @font-face{
   font-family: "Roboto";
   font-style: normal;
@@ -51,13 +51,25 @@
     url("./assets/fonts/Comfortaa-Light.ttf") format('truetype');
 } 
 
-$font-basic: 'Roboto', 'Open Sans', sans-serif;
-$font-extra: 'Comfortaa', 'Open Sans', sans-serif;
-$color-primary-dark: #888ABC;
-$note-color: #fff4c5;
-$border-radius: 30px;
-$box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
-$basic-transition: 0.1s ease;
+
+
+%icon-btn{
+  background: none;
+  background-color: none;
+  background-size: contain;
+  border: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  transition: transform .2s ease;
+  &:hover{
+      transform: scale(1.2);
+  }
+  &:focus{
+      outline: none;
+      transform: scale(1.2);
+  }
+
+}
 
 *{
   margin: 0;
@@ -99,12 +111,18 @@ button{
   margin: auto;
 }
 
+@media screen and (max-width: 600px) {
+  .app-logo{
+    display: none;
+  }
+}
+
 .new-note-btn{
   align-self: center;
   margin: auto;
   font-weight: 400;
   text-align: center;
-  border-radius: 24px;
+  border-radius: $border-radius;
   //border: 1px solid rgb(97, 99, 163);
   border: none;
   padding: 6px 12px;
@@ -124,13 +142,6 @@ button{
   transition: $basic-transition;
 }
 
-.section-title{
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 300;
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgb(217, 223, 240);
-}
 
 .notes-list{
   display: grid;
@@ -176,62 +187,66 @@ button{
   display: flex;
   justify-content: space-between;
 }
-.tag-chip{
-  cursor: pointer;
-  display: flex;
-  font-family: $font-extra;
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  font-size: 16px;
-  transition: $basic-transition;
-}
 
 .taglist{
   display: flex;
   flex-wrap: wrap;
   max-width: 80%;
   margin-bottom: 12px;
-  li{
+  
+  .tag-chip{
     margin: 3px 6px;
     list-style: none;
-  }
-  .tag-chip{
-    background-color: #C4C5E3;
+    background-color: $color-primary;
     box-shadow: $box-shadow;
     padding: 8px 16px;
-    //border: 1px solid rgb(150, 162, 196);
+
+    cursor: pointer;
+    display: flex;
+    font-family: $font-extra;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius;
+    font-size: 16px;
+    transition: $basic-transition;
     &:hover{
-      background-color: darken( #C4C5E3, 10%);
+      background-color: darken(  $color-primary, 5%);
       box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
     }
+    &.selected{
+      background-color: darken(  $color-primary, 10%);
+    }
+    .delete-btn{
+      @extend %icon-btn;
+      width: 12px;
+      height: 12px;
+      margin-left: 12px;
+      background-image: url("./assets/icons/cross.svg");
+    }
   }
+  
 }
 
 .chip-btn{
   border: none;
+  list-style: none;
   &:focus{
     outline: none;
-    background-color: darken( #C4C5E3, 10%);
+    background-color: darken(  $color-primary, 10%);
   }
 }
 
 .note-taglist{
+  font-family: $font-extra;
   display: flex;
   flex-wrap: wrap;
-  padding: 8px 12px;
-  li{
-    margin: 3px ;
+
+  .tag{margin: 3px ;
     list-style: none;
-  }
-  .tag-chip{
     font-size: 12px;
-    background-color: #f8e9b8;
+    background-color: $note-color-dark;
     padding: 4px 8px;
-    //border: 1px solid rgb(150, 162, 196);
-    &:hover{
-      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-    }
+    border-radius: $border-radius;
   }
 }
 
@@ -247,10 +262,6 @@ button{
   z-index: 10;
 }
 
-.hidden{
-  display: none;
-}
-
 .modal{
   display: flex;
   position: relative;
@@ -263,11 +274,21 @@ button{
   background-color: $note-color;
   box-shadow: -2px 5px 20px rgba(0,0,0,0.3);
   padding: 12px 12px 30px;
+
+  .close-btn{
+    @extend %icon-btn;
+    position: absolute;
+    top:12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    background-image: url("./assets/icons/delete.svg");
+  }
 }
 
 .edit-form{
-  display: grid;
-  grid-template-rows: 50px minmax(120px, auto) max-content ;
+  display: flex;
+  flex-direction: column;
   font-family: $font-basic;
   width: 100%;
   padding: 12px;
@@ -280,7 +301,8 @@ button{
   background-color: transparent;
   border: none;padding: 0px;
   border-bottom: 1px solid transparent;
-  margin-bottom: 8px;
+  padding: 4px;
+  margin-bottom: 12px;
   &:focus{
     outline: none;
     border-color: #948e7b;;
@@ -289,6 +311,7 @@ button{
 
 .body-container{
   resize: none;
+  height: 200px;
   background: transparent;
   font-size:  1rem;
   font-family: $font-basic;
@@ -297,6 +320,7 @@ button{
   &:focus{
     outline: none;
   }
+  margin-bottom: 8px;
 }
 
 .body-textarea{
@@ -328,11 +352,12 @@ button{
   border: none;
   background-color: transparent;
   height: fit-content;
-  color: black;
+  color: #333333; 
   font-size: 1rem;
   font-family: $font-extra;
+
   &:focus, &:hover{
-    color: $color-primary-dark;
+    color: #d6ab1c;
     outline: none;
     transform: scale(1.1);
   }

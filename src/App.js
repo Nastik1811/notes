@@ -5,15 +5,8 @@ import data from "./data.json"
 import NoteEditor from "./components/NoteEditor"
 import { useEffect, useState } from "react"
 import uuid from 'uuid-random'
-import { filterByTags } from "./utils"
+import { filterByTags, saveData } from "./utils"
 
-
-const editorDefaults = {
-  open: false,
-  note: undefined,
-  onSave: null,
-  onCancel: null,
-}
 
 const App = () => {
   const [notes, setNotes] = useState(data["notes"])
@@ -22,24 +15,16 @@ const App = () => {
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const [selectedTag, setSelectedTag] = useState(null)
 
-  useEffect(() => {
-
-  }, [notes])
-
-
-  const addNote = () => {
-    let note = {id: "3", title: "New Note", body: "This is my note. He he he."}
-    setNotes(notes => [note, ...notes])
-  }
-
   const onEdit = (id) => {
     let noteIndex = notes.findIndex(note => note.id === id)
     setEditingNote(notes[noteIndex])
     setIsEditorOpen(true)
   }
 
-  const onDelete = (id) => {
-    let newSet = notes.filter(note => note.id !== id)
+  const onDelete = () => {
+    let newSet = notes.filter(note => note.id !== editingNote.id)
+    setIsEditorOpen(false)
+    setEditingNote(null)
     setNotes(newSet)
   }
 
@@ -50,16 +35,17 @@ const App = () => {
 
   const tagsLookUp = text => {
     let tags = text.match(/#[a-zA-Zа-яА-Я0-9]+/g)
-    return tags?.filter((item, index) => tags.indexOf(item) == index).map(tag => tag.slice(1))
+    return tags?.filter((item, index) => tags.indexOf(item.toLowerCase()) === index).map(tag => tag.slice(1).toLowerCase())
   }
 
   const onDeleteTag = (tag) => {
     let newTaglist = tags.filter(t => t!== tag)
     setTags(newTaglist)
+    setNotes(notes.map(note => ({...note, tags: note.tags.filter(t => t!== tag)})))
   }
+
   const updateTaglist = (tagsFromNote) => {
     let newTags = tagsFromNote?.filter(item => !tags.includes(item))
-    console.log(newTags)
     if(newTags){
       setTags(tags => [...tags, ...newTags])
     }
@@ -82,6 +68,7 @@ const App = () => {
 
   const createNote = () => {
     let id = uuid()
+    console.log(id)
     setEditingNote({
       id, 
       title: "",
@@ -95,32 +82,35 @@ const App = () => {
     <div className="app-container">
       <header className="app-header">
         <div className="app-logo">
-          <img src={logo}/>
+          <img src={logo} alt="logo"/>
         </div>
         <button className="btn new-note-btn" onClick={createNote}>+ New note</button>
       </header>
       <section className="notes-section">
         <div className="taglist-container">
           <ul className="taglist">
-            <li>
-              <input className="chip-btn tag-chip" type="button" value="Show all" onClick={() => {setSelectedTag(null)}}/>
-            </li>
+            <input className="chip-btn tag-chip" type="button" value="Show all" onClick={() => {setSelectedTag(null)}}/>
             {tags?.map(tag =>  
-                <TagChip key={tag} name={tag} onClick={() => setSelectedTag(tag)}/>
-          
+                <TagChip 
+                    key={tag} 
+                    name={tag} 
+                    onClick={() => setSelectedTag(tag)} 
+                    onDelete={() => onDeleteTag(tag)}
+                    selected={tag === selectedTag}
+                    />
             )}
-          </ul>
-      </div>
-      <div className="notes-list">
-        {
-          filterByTags(notes, selectedTag)?.map(
-            note => <Note 
-                      key={note.id} 
-                      note={note} 
-                      onEdit={() => onEdit(note.id)}
-                      />)
-        }
-      </div>
+            </ul>
+        </div>
+        <div className="notes-list">
+          {
+            filterByTags(notes, selectedTag)?.map(
+              note => <Note 
+                        key={note.id} 
+                        note={note} 
+                        onEdit={() => onEdit(note.id)}
+                        />)
+          }
+        </div>
       </section>
 
       <NoteEditor 
@@ -128,6 +118,7 @@ const App = () => {
         note={editingNote} 
         onCancel={onCancel} 
         onSave={onSave} 
+        onDelete={onDelete}
         onEdit={setEditingNote}
         />
 

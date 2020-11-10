@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import TagChip from '../TagChip'
+import React from 'react'
 import { HighlightWithinTextarea } from 'react-highlight-within-textarea'
 
 
-const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
+const NoteEditor = ({onSave, onCancel, onDelete, open, note, onEdit}) => {
 
     if(!open){
         return null
     }
 
-    const lookForTags = text => {
-        
-    }
-    const onEditBody = (e) => {
-
-
-    }
-
     return(
         <div className="overlay">
             <div className="modal">
+                <button className="close-btn" onClick={onCancel}></button>
                 <div className="edit-form">
                     <input 
                         className="note-title-input" 
@@ -28,7 +20,6 @@ const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
                         value={note?.title} 
                         onChange={e => onEdit(note => ({...note, title: e.target.value}))}
                         />
-            
 
                     <HighlightWithinTextarea
                         className="body-textarea" 
@@ -38,21 +29,19 @@ const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
                         value={note?.body} 
                         onChange={e => {
                             onEdit(note => ({...note, body: e.target.value}))
-                            let event = e
-                            console.log(e.nativeEvent.data)
                                 }
                             }
-                        highlight={/#\w+/g}
+                        highlight={note.tags|| ""}
                     />
 
     
                     <ul className="note-taglist">
-                            {note?.tags?.map(t => <TagChip key={t} name={t}/>)}
+                            {note?.tags?.map(t => <li key={t} className="tag">{t}</li>)}
                     </ul>
                 </div>
                 <div className="modal-actions">
                     <button className="modal-action-btn" onClick={onSave}>Save</button>
-                    <button className="modal-action-btn" onClick={onCancel}>Cancel</button>
+                    <button className="modal-action-btn" onClick={onDelete}>Delete</button>
                 </div>
             </div>
         </div>

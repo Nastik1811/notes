@@ -1,5 +1,8 @@
-const saveData = (date, db) => {
+const writeJsonFile = require('write-json-file');
+ 
 
+export const saveData =  (tags, notes) => {
+    return writeJsonFile('db.json', {notes, tags});
 }
 
 export const filterByTags = (notes, tag) => {
