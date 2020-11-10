@@ -42,13 +42,12 @@ const NoteEditor = ({onSave, onCancel, open, note, onEdit}) => {
                             console.log(e.nativeEvent.data)
                                 }
                             }
-                        highlight={/word/g}
+                        highlight={/#\w+/g}
                     />
 
-                    
-
+    
                     <ul className="note-taglist">
-                            {note?.tags?.map(t => <li><TagChip name={t}/></li>)}
+                            {note?.tags?.map(t => <TagChip key={t} name={t}/>)}
                     </ul>
                 </div>
                 <div className="modal-actions">

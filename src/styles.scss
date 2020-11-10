@@ -54,7 +54,7 @@
 $font-basic: 'Roboto', 'Open Sans', sans-serif;
 $font-extra: 'Comfortaa', 'Open Sans', sans-serif;
 $color-primary-dark: #888ABC;
-$note-color: #fdfaed;
+$note-color: #fff4c5;
 $border-radius: 30px;
 $box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
 $basic-transition: 0.1s ease;
@@ -138,15 +138,14 @@ button{
   grid-template-columns: repeat(auto-fit, 240px);
   gap: 12px;
 }
+
 .note-container{
   cursor: pointer;
   width: 240px;
-  height: 270px;
+  height: auto;
   padding: 12px 24px;
   border-radius: 8px;
   background-color:  $note-color;
-  display: grid;
-  grid-template-rows: 32px 1fr 24px;
   box-shadow: $box-shadow;
   &:hover{
     background-color: lighten( $note-color, 2%);
@@ -159,14 +158,18 @@ button{
   font-family: $font-basic;
   font-size: 18px;
   font-weight: 500;
-  margin: auto 0;
+  margin-bottom: 8px;
 }
 
 .note-body{
   font-family: $font-basic;
   font-weight: 300;
+  font-size: .9rem;
   text-overflow: ellipsis;
+  height: 230px;
+  overflow: hidden;
 }
+
 .taglist-container{
   margin: 8px 16px;
   border-radius: 16px;
@@ -181,9 +184,6 @@ button{
   align-items: center;
   border-radius: 30px;
   font-size: 16px;
-  &:hover{
-    box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
-  }
   transition: $basic-transition;
 }
 
@@ -203,9 +203,11 @@ button{
     //border: 1px solid rgb(150, 162, 196);
     &:hover{
       background-color: darken( #C4C5E3, 10%);
+      box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
     }
   }
 }
+
 .chip-btn{
   border: none;
   &:focus{
@@ -217,7 +219,7 @@ button{
 .note-taglist{
   display: flex;
   flex-wrap: wrap;
-  padding: 0 12px;
+  padding: 8px 12px;
   li{
     margin: 3px ;
     list-style: none;
@@ -227,6 +229,9 @@ button{
     background-color: #f8e9b8;
     padding: 4px 8px;
     //border: 1px solid rgb(150, 162, 196);
+    &:hover{
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    }
   }
 }
 
@@ -257,7 +262,7 @@ button{
   border-radius: 10px;
   background-color: $note-color;
   box-shadow: -2px 5px 20px rgba(0,0,0,0.3);
-  padding: 12px 12px 40px;
+  padding: 12px 12px 30px;
 }
 
 .edit-form{

@@ -1,15 +1,15 @@
 import React from 'react'
+import { truncateText } from '../../utils'
+import TagChip from '../TagChip'
 
-const Note = ({title, body, tags, onEdit}) => {
+const Note = ({note, onEdit}) => {
+    const MAX_LENGTH = 340
     return(
         <div className="note-container" onClick={onEdit}>
-              <h4 className="note-title">{title || "Title"}</h4>
+              <h4 className="note-title">{note["title"]}</h4>
               <p className="note-body">
-                  {body}
+                  {truncateText(note["body"], MAX_LENGTH)}
               </p>
-              <ul className="note-taglist">
-                    {tags?.map(t => <li>{t}</li>)}
-              </ul>
         </div>
     )
 }

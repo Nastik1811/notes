@@ -5,6 +5,7 @@ import data from "./data.json"
 import NoteEditor from "./components/NoteEditor"
 import { useEffect, useState } from "react"
 import uuid from 'uuid-random'
+import { filterByTags } from "./utils"
 
 
 const editorDefaults = {
@@ -19,6 +20,7 @@ const App = () => {
   const [tags, setTags] = useState(data["tags"])
   const [editingNote, setEditingNote] = useState(null)
   const [isEditorOpen, setIsEditorOpen] = useState(false)
+  const [selectedTag, setSelectedTag] = useState(null)
 
   useEffect(() => {
 
@@ -48,18 +50,31 @@ const App = () => {
 
   const tagsLookUp = text => {
     let tags = text.match(/#[a-zA-Zа-яА-Я0-9]+/g)
-    return tags
+    return tags?.filter((item, index) => tags.indexOf(item) == index).map(tag => tag.slice(1))
+  }
+
+  const onDeleteTag = (tag) => {
+    let newTaglist = tags.filter(t => t!== tag)
+    setTags(newTaglist)
+  }
+  const updateTaglist = (tagsFromNote) => {
+    let newTags = tagsFromNote?.filter(item => !tags.includes(item))
+    console.log(newTags)
+    if(newTags){
+      setTags(tags => [...tags, ...newTags])
+    }
   }
 
   const onSave = () => {
     let index = notes.findIndex(note => note.id === editingNote.id)
     let newSet = [...notes]
     let tags = tagsLookUp(editingNote.body)
-    console.log(tags)
+    updateTaglist(tags)
+
     if(index !== -1){
-      newSet[index] = editingNote
+      newSet[index] = {...editingNote, tags}
     }else{
-      newSet.push(editingNote)
+      newSet.push({...editingNote, tags})
     }
     setNotes(newSet)
     setIsEditorOpen(false)
@@ -71,7 +86,7 @@ const App = () => {
       id, 
       title: "",
       body: "",
-      tags: []
+      tags: null
     })
     setIsEditorOpen(true)
   }
@@ -88,23 +103,23 @@ const App = () => {
         <div className="taglist-container">
           <ul className="taglist">
             <li>
-              <input className="chip-btn tag-chip" type="button" value="Show all"/>
+              <input className="chip-btn tag-chip" type="button" value="Show all" onClick={() => {setSelectedTag(null)}}/>
             </li>
-            {tags?.map(tag => 
-              <li>
-                <TagChip name={tag}/>
-              </li>
+            {tags?.map(tag =>  
+                <TagChip key={tag} name={tag} onClick={() => setSelectedTag(tag)}/>
+          
             )}
           </ul>
       </div>
       <div className="notes-list">
-        {notes?.map(
-          note => <Note 
-                    key={note.id} 
-                    title={note["title"]} 
-                    body={note["body"]} 
-                    onEdit={() => onEdit(note.id)}
-                    />)}
+        {
+          filterByTags(notes, selectedTag)?.map(
+            note => <Note 
+                      key={note.id} 
+                      note={note} 
+                      onEdit={() => onEdit(note.id)}
+                      />)
+        }
       </div>
       </section>
 

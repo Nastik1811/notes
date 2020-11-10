@@ -4,13 +4,13 @@
             "id": 1,
             "title": "Sender’s Address",
             "body": "The sender’s address is notated in the top right-hand corner of the page or centered, as if it were the letterhead. The address should be a complete and accurate address for the recipient, in case the recipient needs to reach out to the sender for any reason. ",
-            "tags" : []
+            "tags" : ["Shopping", "University"]
         },
         {
             "id": 2,
             "title": "Иммутабельность",
             "body": "Иммутабельные объекты – неизмеримо мощный феномен в программировании. ",
-            "tags" : []
+            "tags" : ["Home"]
         }
     ],
     "tags": ["Home", "Shopping", "University", "Studying"]
