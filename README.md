@@ -7,3 +7,6 @@
     - When you remove a tag from the global list the app automatically removes it from all notes.
 4. You could filter notes by clicking tag-chips.
 5. In order to edit/delete a note just click on it and a familiar editor lets you make changes.
+
+
+Hosted app: https://nastik1811.github.io/notes/
