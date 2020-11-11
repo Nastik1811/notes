@@ -1,5 +1,6 @@
 import React from 'react'
 import { HighlightWithinTextarea } from 'react-highlight-within-textarea'
+import TagChip from '../TagChip'
 
 
 const NoteEditor = ({onSave, onCancel, onDelete, open, note, onEdit}) => {
@@ -16,7 +17,7 @@ const NoteEditor = ({onSave, onCancel, onDelete, open, note, onEdit}) => {
                     <input 
                         className="note-title-input" 
                         placeholder="Title"  
-                        maxLength="250" 
+                        maxLength="50" 
                         value={note?.title} 
                         onChange={e => onEdit(note => ({...note, title: e.target.value}))}
                         />
@@ -35,8 +36,13 @@ const NoteEditor = ({onSave, onCancel, onDelete, open, note, onEdit}) => {
                     />
 
     
-                    <ul className="note-taglist">
-                            {note?.tags?.map(t => <li key={t} className="tag">{t}</li>)}
+                    <ul className="editor-taglist">
+                            {note?.tags?.map(t => <TagChip 
+                                    key={t}
+                                    tagClassName="note-tag" 
+                                    name={t}
+                                    onDelete={() => onEdit(note => ({...note, tags: note.tags.filter(tag => tag !== t)}))}
+                                    />)}
                     </ul>
                 </div>
                 <div className="modal-actions">

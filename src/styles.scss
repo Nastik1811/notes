@@ -1,56 +1,5 @@
 @import './styles/_variables.scss' ;
-@font-face{
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  src: 
-    local("Roboto"),
-    url("./assets/fonts/Roboto-Regular.ttf") format('truetype');
-} 
-
-@font-face{
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 300;
-  src: 
-    local("Roboto-Light"),
-    url("./assets/fonts/Roboto-Light.ttf") format('truetype');
-} 
-
-@font-face{
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  src: 
-    local("Roboto-Medium"),
-    url("./assets/fonts/Roboto-Medium.ttf") format('truetype');
-}
-@font-face{
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 400;
-  src: 
-    local("Comfortaa"),
-    url("./assets/fonts/Comfortaa-Regular.ttf") format('truetype');
-} 
-@font-face{
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 500;
-  src: 
-    local("Comfortaa"),
-    url("./assets/fonts/Comfortaa-Medium.ttf") format('truetype');
-} 
-
-@font-face{
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 300;
-  src: 
-    local("Comfortaa"),
-    url("./assets/fonts/Comfortaa-Light.ttf") format('truetype');
-} 
-
+@import './styles/_fonts.scss';
 
 
 %icon-btn{
@@ -62,13 +11,12 @@
   display: inline-block;
   transition: transform .2s ease;
   &:hover{
-      transform: scale(1.2);
+      transform: scale(1.1);
   }
   &:focus{
       outline: none;
-      transform: scale(1.2);
+      transform: scale(1.1);
   }
-
 }
 
 *{
@@ -80,6 +28,7 @@
 body, html{
   height: 100%;
 }
+
 button{
   cursor: pointer;
 }
@@ -89,10 +38,12 @@ button{
   display: flex;
   background-color: #EFF0FA;
 }
+
 .app-container{
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -102,6 +53,7 @@ button{
   margin: 24px;
   margin-bottom: 0;
 }
+
 .app-logo{
   font-family: $font-extra;
   font-size: 100px;
@@ -111,41 +63,52 @@ button{
   margin: auto;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 660px) {
   .app-logo{
     display: none;
   }
 }
 
 .new-note-btn{
-  align-self: center;
+  height: fit-content;
+  width: 200px;
   margin: auto;
+  color: white;
+  font-size: 24px;
+  font-family: $font-extra;
   font-weight: 400;
   text-align: center;
   border-radius: $border-radius;
-  //border: 1px solid rgb(97, 99, 163);
   border: none;
   padding: 6px 12px;
   background-color: $color-primary-dark;
   box-shadow: $box-shadow;
-  height: fit-content;
-  width: 200px;
-  color: white;
-  font-size: 24px;
-  font-family: $font-extra;
+  transition: $basic-transition;
 
   &:focus, &:hover{
     outline: none;
     transform: scale(1.1);
     background-color: darken( $color-primary-dark, 20% ) ;
   }
-  transition: $basic-transition;
 }
 
+@media screen and (max-width: 660px) {
+  .new-note-btn{
+    grid-column:  1 / span 2;;
+    width: 90%;
+    margin-bottom: 24px;
+  }
+}
+
+.notes-section{
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+}
 
 .notes-list{
   display: grid;
-  margin: auto;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, 240px);
   gap: 12px;
 }
@@ -153,16 +116,16 @@ button{
 .note-container{
   cursor: pointer;
   width: 240px;
-  height: auto;
+  height: 310px;
   padding: 12px 24px;
   border-radius: 8px;
-  background-color:  $note-color;
+  background-color: $note-color;
   box-shadow: $box-shadow;
+  transition: $basic-transition;
   &:hover{
     background-color: lighten( $note-color, 2%);
     box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
   }
-  transition: $basic-transition;
 }
 
 .note-title{
@@ -170,6 +133,9 @@ button{
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .note-body{
@@ -177,77 +143,116 @@ button{
   font-weight: 300;
   font-size: .9rem;
   text-overflow: ellipsis;
-  height: 230px;
+  height: 210px;
   overflow: hidden;
 }
 
-.taglist-container{
-  margin: 8px 16px;
-  border-radius: 16px;
-  display: flex;
-  justify-content: space-between;
+@media (max-width: 660px){
+  .notes-list{
+    grid-template-columns: 1fr;
+  }
+
+  .note-container{
+    margin: auto;
+    width: 100%;
+    height: auto;
+  }
+  .note-body{
+    font-family: $font-basic;
+    font-weight: 300;
+    font-size: .9rem;
+    text-overflow: ellipsis;
+    height: auto;
+    overflow: hidden;
+  }
 }
 
 .taglist{
   display: flex;
   flex-wrap: wrap;
-  max-width: 80%;
-  margin-bottom: 12px;
-  
-  .tag-chip{
-    margin: 3px 6px;
-    list-style: none;
-    background-color: $color-primary;
-    box-shadow: $box-shadow;
-    padding: 8px 16px;
-
-    cursor: pointer;
-    display: flex;
-    font-family: $font-extra;
-    justify-content: center;
-    align-items: center;
-    border-radius: $border-radius;
-    font-size: 16px;
-    transition: $basic-transition;
-    &:hover{
-      background-color: darken(  $color-primary, 5%);
-      box-shadow: -2px 4px 10px rgba(0,0,0,0.2);
-    }
-    &.selected{
-      background-color: darken(  $color-primary, 10%);
-    }
-    .delete-btn{
-      @extend %icon-btn;
-      width: 12px;
-      height: 12px;
-      margin-left: 12px;
-      background-image: url("./assets/icons/cross.svg");
-    }
-  }
-  
+  margin: 0 24px 16px;
 }
 
-.chip-btn{
-  border: none;
+@media (max-width: 660px){
+  .taglist{
+    justify-content: center;
+  }
+}
+
+.tag-chip{
+  cursor: pointer;
   list-style: none;
-  &:focus{
-    outline: none;
+  margin: 6px;
+  padding: 8px 16px;
+  display: flex;
+  font-family: $font-extra;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius;
+  transition: $basic-transition;
+
+  .delete-btn{
+    @extend %icon-btn;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    background-image: url("./assets/icons/cross.svg");
+    fill: #f1ca48 !important;
+  }
+}
+
+.filter-tag{
+  background-color: $color-primary;
+  box-shadow: $box-shadow;
+  font-size: 16px;
+  &:hover{
+    background-color: darken(  $color-primary, 5%);
+    box-shadow: $box-shadow-hover;
+  }
+  &.selected{
     background-color: darken(  $color-primary, 10%);
   }
 }
 
-.note-taglist{
+.note-tag{
+  background-color: $note-color-dark;
+  font-size: 14px;
+}
+
+.chip-btn{
+  cursor: pointer;
+  border: none;
+  list-style: none;
+  background-color: $color-primary;
+  box-shadow: $box-shadow;
+  margin: 6px;
+  padding: 8px 16px;
+  font-family: $font-extra;
+  border-radius: $border-radius;
+  font-size: 16px;
+  transition: $basic-transition;
+  &:focus, &:hover{
+    outline: none;
+    background-color: darken(  $color-primary, 10%);
+    box-shadow: $box-shadow-hover;
+  }
+}
+
+.note-tags{
   font-family: $font-extra;
   display: flex;
   flex-wrap: wrap;
+  overflow: hidden;
+}
 
-  .tag{margin: 3px ;
-    list-style: none;
-    font-size: 12px;
-    background-color: $note-color-dark;
-    padding: 4px 8px;
-    border-radius: $border-radius;
-  }
+
+.tag{
+  margin: 3px ;
+  list-style: none;
+  font-size: .6rem;
+  background-color: $note-color-dark;
+  padding: 4px 8px;
+  border-radius: $border-radius;
 }
 
 .overlay{
@@ -267,7 +272,8 @@ button{
   position: relative;
   margin: auto;
   margin-top: 20vh;
-  width: 580px;
+  width: 90vw;
+  max-width: 580px;
   height: fit-content;
   min-height: 280px;
   border-radius: 10px;
@@ -282,7 +288,7 @@ button{
     right: 12px;
     width: 20px;
     height: 20px;
-    background-image: url("./assets/icons/delete.svg");
+    background-image: url("./assets/icons/close.svg");
   }
 }
 
@@ -334,6 +340,11 @@ button{
   &:focus{
     outline: none;
   }
+}
+
+.editor-taglist{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .modal-actions{

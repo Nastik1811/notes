@@ -1,9 +1,13 @@
+@import './_fonts.scss';
+
+
 $font-basic: 'Roboto', 'Open Sans', sans-serif;
 $font-extra: 'Comfortaa', 'Open Sans', sans-serif;
-$color-primary-dark: #888ABC;
-$color-primary:#C4C5E3;
+$color-primary-dark: #8487c9;
+$color-primary:#bcbdeb;
 $note-color: #fff4c5;
 $note-color-dark: #f8e9b8;
 $border-radius: 24px;
 $box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+$box-shadow-hover: -2px 2px 5px rgba(0,0,0,0.2);
 $basic-transition: 0.1s ease;
