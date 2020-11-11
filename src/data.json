@@ -2,22 +2,28 @@
     "notes":[
         {
             "id": "a51c621b-f3cb-4188-9318-0e1198d2443a",
-            "title": "Sender’s Address",
-            "body": "The sender’s address is notated in the top right-hand corner of the page or centered, as if it were the letterhead. The address should be a complete and accurate address for the recipient, in case the recipient needs to reach out to the sender for any reason. #home",
-            "tags" : ["home"]
+            "title": "TRAVEL PACK",
+            "body": "When it comes to packing, the best way to pack a backpack is to save space. Our top tip is to fold your clothes efficiently. Remember: Heavy stuff at the bottom, stuff that leaks goes in plastic bags and things you’ll need as soon as you arrive at your destination (like toiletries) at the top. Roll your clothes up rather than fold them if it takes up less room.",
+            "tags" : ["travel", "packing"]
         },
         {
             "id": "88cdd6f1-2946-4584-9c73-8017253004da",
             "title": "Иммутабельность",
-            "body": "Иммутабельные объекты – неизмеримо мощный феномен в программировании. #studying #home",
-            "tags" : ["studying"]
+            "body": "Иммутабельные объекты – неизмеримо мощный феномен в программировании.",
+            "tags" : ["studying", "js", "programming"]
         },
         {
             "id": "37940a7e-ef04-474d-8b69-79c594190e51",
             "title": "Document: keydown event",
             "body": "The keydown and keyup events provide a code indicating which key is pressed, while keypress indicates which character was entered. For example, a lowercase \"a\" will be reported as 65 by keydown and keyup, but as 97 by keypress. An uppercase \"A\" is reported as 65 by all events.",
             "tags" : ["studying", "js", "javascript"]
+        },
+        {
+            "id": "etwg4w342-dg42-525d-8b69-79c5sdf3ea23",
+            "title": "Aliexpress",
+            "body": "11.11 Worldwide SALES. Time to #shopping",
+            "tags" : ["shopping", "sales"]
         }
     ],
-    "tags": ["home", "shopping", "university", "studying"]
+    "tags": ["shopping", "travel", "packing", "studying", "js", "programming", "sales"]
 }

@@ -47,9 +47,7 @@ const App = () => {
   const onSave = () => {
     let index = notes.findIndex(note => note.id === editingNote.id)
     let newSet = [...notes]
-
     let newTags = extractTagsFromText(editingNote.body) || []
-    console.log(newTags)
     let taglist = removeDuplicate([...editingNote.tags, ...newTags])
 
     if(index !== -1){

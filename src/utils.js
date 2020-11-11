@@ -25,12 +25,11 @@ export const getNoteTemplate = () => ({
   })
 
 export const extractTagsFromText = text => {
-    let tags = text.match(/#[a-zA-Zа-яА-Я0-9]+/g)
+    let tags = text.match(/#[a-zA-Zа-яА-Я0-9_]+/g)
     return tags?.map(tag => tag.slice(1).toLowerCase())
   }
 
 export const removeDuplicate = list => {
     let uniqueValues = list?.filter((item, index) => list.indexOf(item) === index)
-    console.log(uniqueValues)
     return uniqueValues
 }
